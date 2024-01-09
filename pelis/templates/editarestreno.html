@@ -1,0 +1,38 @@
+{% extends 'inicio.html' %}
+{% block content %}
+{% load static %}
+
+<h1>Estrenos</h1>
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <div class="card">
+            <div class="card-body">
+                <form action="updateestreno/{{estreno.codigo}}" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="file"  name="cover" value="{{estreno.imagen}}" class="form-control" placeholder="cover">
+                    </div>
+                    <div class="form-group">
+                        <input type="text"  name="titulo" value="{{estreno.titulo}}" class="form-control" placeholder="Titulo"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <textarea type="text" rows="5"  name="sinopsis" class="form-control" placeholder="sinopsis" maxlength="300">{{estreno.sinopsis}}</textarea><br>
+                    </div>
+                    <div class="form-group">
+                        <input type="text"  name="fecha" value="{{estreno.fecha}}" class="form-control" placeholder="Estreno"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text"  name="tipo" value="{{estreno.tipo}}" class="form-control" placeholder="Formato"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

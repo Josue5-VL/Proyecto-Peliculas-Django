@@ -1,0 +1,29 @@
+{% extends 'inicio.html' %}
+{% block content %}
+
+<h1>Series</h1>
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <div class="card">
+            <div class="card-body">
+                <form action="updateserie/{{show.codigo}}" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="file"  name="cover" value="{{show.imagen}}" class="form-control" placeholder="cover">
+                    </div>
+                    <div class="form-group">    
+                        <input type="text"  name="titulo" value="{{show.titulo}}" class="form-control" placeholder="Titulo"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <textarea type="text" rows="5" name="sinopsis" class="form-control" placeholder="sinopsis">{{show.sinopsis}}</textarea><br>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

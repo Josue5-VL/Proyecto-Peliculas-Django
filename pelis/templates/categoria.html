@@ -1,0 +1,161 @@
+{% extends 'inicio.html' %}
+{% block content %}
+{% load static %}
+
+
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <div class="card">
+            <div class="card-body">
+                <form action="guardarcateg/" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="text"  name="nombre" class="form-control" placeholder="Nombre">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <div class="card">
+            <div class="card-body">
+                <form method="post" action="agregarpelicat/">
+                    {% csrf_token %}
+                    <label for="pelicula">Selecciona una película:</label>
+                    <select name="pelicula" id="pelicula">
+                        {% for pelicula in peliculas %}
+                        <option value="{{ pelicula.codigo }}">{{ pelicula.titulo }}</option>
+                    {% endfor %}
+                    </select>
+                    <label for="categoria">Selecciona una categoría:</label>
+                    <select name="categoria" id="categoria">
+                        {% for categoria in categorias %}
+                        <option value="{{ categoria.codigo }}">{{ categoria.nombre }}</option>
+                    {% endfor %}
+                    </select>
+                
+                    <input type="submit" value="Agregar a categoría">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <div class="card">
+            <div class="card-body">
+                <form method="post" action="agregarseriecat/">
+                    {% csrf_token %}
+                    <label for="pelicula">Selecciona una serie:</label>
+                    <select name="serie" id="serie">
+                        {% for serie in series %}
+                        <option value="{{ serie.codigo }}">{{ serie.titulo }}</option>
+                    {% endfor %}
+                    </select>
+                    <label for="categoria">Selecciona una categoría:</label>
+                    <select name="categoria" id="categoria">
+                        {% for categoria in categorias %}
+                        <option value="{{ categoria.codigo }}">{{ categoria.nombre }}</option>
+                    {% endfor %}
+                    </select>
+                
+                    <input type="submit" value="Agregar a categoría">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* static/styles.css */
+
+/* Estilos generales */
+body {
+font-family: Arial, sans-serif;
+}
+
+h1 {
+margin-bottom: 20px;
+}
+
+/* Estilos para la tabla */
+.table {
+width: 100%;
+border-collapse: collapse;
+}
+
+.table th,
+.table td {
+padding: 8px;
+text-align: left;
+}
+
+.table th {
+background-color: #f2f2f2;
+}
+
+.table tr:nth-child(even) {
+background-color: #f2f2f2;
+}
+
+/* Estilos para el botón de eliminar categoría */
+.btn-danger {
+background-color: #dc3545;
+color: #fff;
+border: none;
+padding: 8px 15px;
+border-radius: 5px;
+text-decoration: none;
+display: inline-block;
+margin-top: 5px;
+cursor: pointer;
+}
+
+</style>
+
+<h1>Categorias</h1>
+
+<a class="btn btn-success" href="imprimircateg/">Imprimir</a>
+
+<table class="table">
+<thead>
+<tr>
+  <th>Nombre de Categoría</th>
+  <th>Peliculas</th>
+  <th>Series</th>
+  <th>Acciones</th>
+</tr>
+</thead>
+<tbody>
+{% for categoria in categorias %}
+  <tr>
+    <td>{{ categoria.nombre }}</td>
+    <td>
+      <ul>
+        {% for pelicula in categoria.peliculas.all %}
+          <li>{{ pelicula.titulo }}</li>
+        {% endfor %}
+      </ul>
+    </td>
+    <td>
+      <ul>
+        {% for serie in categoria.series.all %}
+          <li>{{ serie.titulo }}</li>
+        {% endfor %}
+      </ul>
+    </td>
+    <td>
+      <a href="borrarcateg/{{categoria.codigo}}" class="btn btn-danger">Quitar</a>
+    </td>
+  </tr>
+{% endfor %}
+</tbody>
+</table>
+
+
+{% endblock %}

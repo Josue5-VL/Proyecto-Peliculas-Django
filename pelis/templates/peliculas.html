@@ -1,0 +1,73 @@
+{% extends 'inicio.html' %}
+{% block content %}
+{% load static %}
+
+<h1>PELICULAS</h1>
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <div class="card">
+            <div class="card-body">
+                <form action="guardarpeli/" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="file"  name="cover" class="form-control" placeholder="cover">
+                    </div>
+                    <div class="form-group">
+                        <input type="text"  name="titulo" class="form-control" placeholder="Titulo"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <textarea type="text" rows="5" name="sinopsis" class="form-control" placeholder="sinopsis" maxlength="300"></textarea><br>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .card {
+        height: 100%;
+    }
+    .card-img-top {
+        height: 450px; /* Altura fija para la imagen */
+        object-fit: cover; /* Para que la imagen no se deforme */
+    }
+    .card-body {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .card-text {
+        flex-grow: 1; /* Permite que el texto ocupe el espacio restante */
+    }
+</style>
+
+<div class="row">
+    {% for p in peli %}
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card">
+            <div class="d-flex flex-row card-content">
+                <div class="col-sm-5">
+                    <img class="card-img-top" src="/static/media/{{p.imagen}}" alt="Card image">
+                </div>
+                <div class="col-sm-7">
+                    <div class="card-body">
+                        <h5 class="card-title">{{p.titulo}}</h5>
+                        <p class="card-text">{{p.sinopsis}}</p>
+                        <a href="editarpeli/{{p.codigo}}" class="btn btn-primary">Editar</a>
+                        <a href="borrarpeli/{{p.codigo}}" class="btn btn-danger">Quitar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+{% endblock %}
